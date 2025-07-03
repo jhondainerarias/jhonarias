@@ -3,13 +3,213 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Descubre fragancias exclusivas y personales. Donde cada gota cuenta una historia. Encuentra tu esencia perfecta.">
+
     <title>Mis Fragancias</title>
 <link rel="stylesheet" href ="stiles.css" type="text/css">
+ <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+
+<style>
+    /* Estilos adicionales para el buscador y sus resultados */
+    .search-perfume-section {
+        margin-top: 20px;
+        margin-bottom: 15px;
+    }
+
+    .search-perfume-section input[type="text"] {
+        width: calc(35% - 20px); /* Ajusta el ancho */
+        padding: 10px;
+        border: 1px solid #013cdfe3;
+        border-radius: 5px;
+        box-sizing: border-box; /* Incluye padding y border en el ancho */
+        font-size: 1em;
+    }
+
+    .search-results-perfume {
+        max-height: 30px; /* Limita la altura del contenedor de resultados */
+        overflow-y: auto; /* Agrega scroll si hay muchos resultados */
+        margin-top: 10px;
+        border-radius: 5px;
+        background-color: #00c3ff;
+    }
+
+    .search-result-item-perfume {
+        padding: 8px 12px;
+        border-bottom: 1px solid #097bfd;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+    }
+
+    .search-result-item-perfume:last-child {
+        border-bottom: none;
+    }
+
+    .search-result-item-perfume:hover {
+        background-color: #02aefd;
+    }
+
+    .search-result-item-perfume.selected {
+        background-color: #007bff;
+        color: white;
+    }
+
+    .gender-menu1:hover {
+
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.45);
+  border: 1px solid rgb(4, 71, 255);
+}
+
+/* H2 dentro de gender-menu */
+.gender-menu1 h2 {
+  color: #ffffff;
+  margin-bottom: 15px;
+  font-size: 1.8em;
+  text-shadow: 0 2px 4px rgb(1, 141, 255);
+}
+/* Estilos para el overlay (fondo oscuro) */
+.custom-alert-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7); /* Fondo semi-transparente oscuro */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Asegura que esté por encima de otros elementos */
+    visibility: hidden; /* Oculto por defecto */
+    opacity: 0;
+    transition: visibility 0s, opacity 0.3s ease;
+}
+
+.custom-alert-overlay.show {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* Estilos para el contenido de la alerta */
+.custom-alert-content {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    max-width: 400px;
+    width: 90%;
+    transform: translateY(-20px); /* Efecto de entrada */
+    transition: transform 0.3s ease;
+}
+
+.custom-alert-overlay.show .custom-alert-content {
+    transform: translateY(0);
+}
+
+.custom-alert-content p {
+    font-size: 1.1em;
+    color: #333;
+    margin-bottom: 20px;
+    line-height: 1.5;
+}
+
+.custom-alert-content button {
+    background-color: #007bff; /* Color azul, puedes cambiarlo */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.2s ease;
+}
+
+.custom-alert-content button:hover {
+    background-color: #0056b3;
+}
+/* Asegura que el contenedor del swiper tenga un tamaño definido */
+.mySwiper {
+    width: 70%;
+    height: 50px; /* Ajusta la altura según tus necesidades */
+    /* Puedes añadir max-width para que no sea demasiado grande en pantallas amplias */
+    /* max-width: 1200px; */
+    margin: 20px auto; /* Centrar y añadir espacio */
+}
+
+/* Las imágenes dentro de los slides deben ocupar el 100% del espacio */
+.swiper-slide img {
+    width: 50%;
+    height: 50%;
+    object-fit: cover; /* Asegura que la imagen cubra el área sin distorsionarse */
+    display: block; /* Elimina espacio extra debajo de la imagen */
+}
+
+/* Estilos para las flechas de navegación (opcional) */
+.swiper-button-next,
+.swiper-button-prev {
+    color: #fff; /* Color de las flechas */
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo semitransparente para las flechas */
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+/* Para que el icono dentro de la flecha sea visible */
+.swiper-button-next::after,
+.swiper-button-prev::after {
+    font-size: 1.5em; /* Tamaño del icono */
+}
+
+/* Estilos para los puntitos de paginación (opcional) */
+.swiper-pagination-bullet {
+    background-color: #fff; /* Color de los puntitos inactivos */
+    opacity: 0.7;
+}
+
+.swiper-pagination-bullet-active {
+    background-color: #007bff; /* Color del puntito activo */
+    opacity: 1;
+}
+/* Para navegadores basados en WebKit (Chrome, Safari, la mayoría de los móviles) */
+::-webkit-input-placeholder {
+  color: #0999ec; /* Cambia el color del texto del placeholder */
+  font-style: italic; /* Aplica estilo cursiva */
+  font-size: 14px; /* Cambia el tamaño de la fuente */
+  opacity: 1; /* Asegura que no haya transparencia por defecto en algunos navegadores */
+}
+
+/* Para Mozilla Firefox */
+::-moz-placeholder {
+  color: #4978f8;
+  font-style: italic;
+  font-size: 14px;
+  opacity: 1; /* Firefox necesita esto también */
+}
+
+/* Para Internet Explorer 10 y 11 */
+:-ms-input-placeholder {
+  color: #0ca2f8;
+  font-style: italic;
+  font-size: 14px;
+}
+
+/* Para Microsoft Edge */
+::placeholder {
+  color: #0099ff;
+  font-style: italic;
+  font-size: 14px;
+}
+</style>
 </head>
-<body> 
+<body>
+    
     <div class="container">
         <h1>Mis Fragancias Jhon Dainer Arias</h1>
-        <h2>todo en perfumes </h2>
+        <h2>"Tu esencia, nuestra pasión." </h2>
+                <h2>""Un perfume no es solo un aroma, sino una experiencia que deja una huella duradera y personal" " </h2>
+
     </div>
     <div class="container">
         <div class="comprador-id-section">
@@ -18,9 +218,14 @@
             <input type="text" id="nombreInput" placeholder="Nombre" aria-label="Introduce tu nombre">
             <input type="text" id="celularInput" placeholder="Celular" aria-label="Número de celular">
         </div>
-
+        
+    
+            <input type="text" id="perfumeSearchInput" placeholder="buscar perfume ...">
+            <div id="perfumeSearchResults" class="search-results-perfume">
+                </div>
+        </div>
         <h2>¿Buscas un buen perfume a un excelente precio?</h2>
-        <h3>Selecciona la Casa Perfumera:</h3>
+        <h3> selecciona la Casa Perfumera:</h3>
         <div class="opciones-select">
             <select id="casaSelect">
                 <option value="">-- ¿Qué casa perfumera? --</option>
@@ -132,7 +337,7 @@
         <h3>Selecciona el Perfume:</h3>
         <div class="opciones-select" id="perfumeSelectContainer" style="display: none;">
             <select id="perfumeSelect">
-                <option value="">-- Selecciona un perfume --</option>
+                <option value=""> Selecciona un perfume </option>
             </select>
         </div>
 
@@ -163,62 +368,15 @@
             </button>
         </div>
     </div>
-     
+    
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
- <div class="container">
-        <h1>Mis Fragancias Jhon Dainer Arias </h1> 
-
-<h2> El Arte de Elegir tu Esencia: Una Guía de Mis Fragancias Jhon Dainer Arias
-
-En el vasto universo de los aromas, elegir la  **fragancia perfecta**  
-es más que una simple compra; es un viaje personal, una declaración de estilo y una
- forma de dejar una huella memorable. En <br>💦🧴  Mis Fragancias Jhon Dainer Arias🧴💦 
- 
- entendemos que cada rocío es una expresión de tu individualidad. Te invitamos a sumergirte
-  en el fascinante mundo de la perfumería y descubrir la esencia que te define.
-
- ¿Por Qué un Perfume Es Más Que un Aroma?
-
-Un perfume es una extensión de nuestra personalidad, un accesorio invisible que comunica mucho antes de que digamos una palabra. La memoria olfativa es una de las más poderosas, capaz de transportarnos a momentos especiales, evocar emociones profundas y conectarnos con recuerdos perdidos. Elegir la fragancia adecuada te permite:<br>
-
-👉🏻 Expresar tu Identidad<br>
- ¿Eres audaz y aventurero, o prefieres la sutileza y la elegancia clásica? Hay un aroma para cada faceta de tu ser.<br>
-👉🏻Crear Recuerdos Inolvidables <br>
- Un perfume puede quedar ligado a momentos importantes de tu vida, haciendo que cada vez que lo huelas, revivas esa experiencia.<br>
-👉🏻Potenciar tu Confianza<br>
-Sentirte bien con tu aroma te da un impulso extra de seguridad para enfrentar el día.<br>
-👉🏻Dejar una Impresión Duradera<br>
- La estela de un buen perfume es tu firma personal, dejando una reminiscencia agradable mucho después de haberte ido.<br>
-
-
-  🔎Descubre Tu Fragancia Ideal en Mis Fragancias Jhon Dainer Arias <br>
-
-🧖🏻‍♀️🧴💕En nuestra colección, cada perfume ha sido seleccionado cuidadosamente para ofrecerte una **experiencia olfativa excepcional**. Nos enorgullece presentar fragancias que no solo huelen increíble, sino que también cuentan una historia y te permiten crear la tuya propia.
-
-<br>🥥🌴🌺🍍🌸Para el Espíritu Aventurero**: Notas cítricas y acuáticas que evocan la brisa marina y la libertad.
-<br> 🌸🍓🌷🍒☁️🫧Para el Alma Romántica**: Acordes florales y dulces que susurran historias de amor y pasión.<br>
- 🏝️🍹⛱️🌞 🌊Para la Personalidad Enigmática**: Aromas amaderados, especiados y orientales que envuelven con misterio y sofisticación.
-<br> 🌊☀️🏝️🐚Para el Día a Día**: Fragancias frescas y limpias que te acompañan con discreción y elegancia.
-<br>
-
-
-🙋🏻‍♂️ Consejos para Maximizar tu Experiencia Olfativa
-
-1. 💖💗🥰💞Aplica en Puntos de Pulso**: Muñecas, cuello, detrás de las orejas y en la parte interna de los codos. El calor de estas zonas ayuda a que la fragancia se difunda mejor.<br>
-2.  🥓No Frotes**: Evita frotar tus muñecas después de aplicar el perfume, ya que esto puede romper las moléculas del aroma y alterar su duración.<br>
-3.  💧Hidrata tu Piel**: Los perfumes duran más en pieles hidratadas. Considera usar una crema hidratante sin aroma antes de aplicar tu fragancia.<br>
-4.  🧴💦 Menos es Más**: Unas pocas pulverizaciones son suficientes. La idea es que te sientan, no que invadas el espacio olfativo de los demás.<br>
-5.  🌞 Guarda Correctamente**: Mantén tus perfumes en un lugar fresco y oscuro, lejos de la luz directa del sol y la humedad, para preservar su calidad.<br>
-
----
-
-En **Mis Fragancias Jhon Dainer Arias**, te invitamos a explorar nuestra exquisita selección y encontrar esa esencia única que resuena contigo. Permítenos ser tu guía en el fascinante mundo de las fragancias, donde cada aroma es una promesa de belleza y distinción.
-
-**¡Descubre tu próxima obsesión olfativa hoy mismo!** </h2>
+    <div class="container">
+        <h1>Mis Fragancias Jhon Dainer Arias </h1>
+       
 
 
     </div>
-    
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const messageArea = document.getElementById('messageArea');
@@ -231,10 +389,12 @@ En **Mis Fragancias Jhon Dainer Arias**, te invitamos a explorar nuestra exquisi
             const perfumeSelect = document.getElementById('perfumeSelect');
             const perfumeSelectContainer = document.getElementById('perfumeSelectContainer');
 
+            const perfumeSearchInput = document.getElementById('perfumeSearchInput'); // Nuevo
+            const perfumeSearchResults = document.getElementById('perfumeSearchResults'); // Nuevo
+
             const sendWhatsappButton = document.getElementById('sendWhatsappButton');
 
             // TU NÚMERO DE WHATSAPP CON CÓDIGO DE PAÍS (sin el signo +)
-            // Ejemplo para Colombia: '573XXXXXXXXX' (57 es el código de país)
             const yourWhatsappNumber = '573138094678'; // ¡CAMBIA ESTO!
 
             // --- Datos de Perfumes por Casa ---
@@ -351,7 +511,7 @@ En **Mis Fragancias Jhon Dainer Arias**, te invitamos a explorar nuestra exquisi
             let currentTamaño = localStorage.getItem('tamañoSeleccionado') || '';
             let currentPrecio = localStorage.getItem('precioSeleccionado') || '';
             let currentCasa = localStorage.getItem('casaSeleccionada') || '';
-            let currentPerfume = localStorage.getItem('perfumeSeleccionado') || '';
+            let currentPerfume = localStorage.getItem('perfumeSeleccionado') || ''; // Este será el perfume seleccionado, ya sea por búsqueda o dropdown
 
             // Cargar valores iniciales desde localStorage y aplicar al UI
             nombreInput.value = currentNombre;
@@ -379,6 +539,15 @@ En **Mis Fragancias Jhon Dainer Arias**, te invitamos a explorar nuestra exquisi
             }
 
             /**
+             * Normaliza una cadena de texto para comparación (elimina acentos, convierte a minúsculas).
+             * @param {string} text - El texto a normalizar.
+             * @returns {string} El texto normalizado.
+             */
+            function normalizeText(text) {
+                return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+            }
+
+            /**
              * Actualiza el área de mensajes y el enlace de WhatsApp.
              */
             function updateMessageAndWhatsappLink() {
@@ -398,16 +567,18 @@ En **Mis Fragancias Jhon Dainer Arias**, te invitamos a explorar nuestra exquisi
                     message += `Por favor, ingresa tu celular.\n`;
                 }
 
-                if (currentCasa) {
-                    whatsappText += `Casa: ${casaSelect.options[casaSelect.selectedIndex].text}\n`;
-                    message += `Casa: ${casaSelect.options[casaSelect.selectedIndex].text}\n`;
-                } else {
-                    message += `Selecciona una casa perfumera.\n`;
-                }
-
+                // Si hay un perfume seleccionado (ya sea por dropdown o búsqueda)
                 if (currentPerfume) {
-                    whatsappText += `Perfume: ${currentPerfume}\n`;
-                    message += `Perfume: ${currentPerfume}\n`;
+                    // Intenta encontrar la casa del perfume seleccionado
+                    let foundCasa = '';
+                    for (const casaKey in perfumesByCasa) {
+                        if (perfumesByCasa[casaKey].includes(currentPerfume)) {
+                            foundCasa = casaSelect.querySelector(`option[value="${casaKey}"]`).textContent;
+                            break;
+                        }
+                    }
+                    whatsappText += `Perfume: ${currentPerfume}${foundCasa ? ` (Casa: ${foundCasa})` : ''}\n`;
+                    message += `Perfume: ${currentPerfume}${foundCasa ? ` (Casa: ${foundCasa})` : ''}\n`;
                 } else {
                     message += `Selecciona un perfume.\n`;
                 }
@@ -435,11 +606,11 @@ En **Mis Fragancias Jhon Dainer Arias**, te invitamos a explorar nuestra exquisi
 
                 messageArea.innerText = message;
                 sendWhatsappButton.onclick = () => {
-                    if (currentNombre && currentCelular && currentCasa && currentPerfume && currentGenero && currentTamaño && currentPrecio) {
+                    if (currentNombre && currentCelular && currentPerfume && currentGenero && currentTamaño && currentPrecio) {
                         const encodedMessage = encodeURIComponent(whatsappText);
                         window.open(`https://wa.me/${yourWhatsappNumber}?text=${encodedMessage}`, '_blank');
                     } else {
-                        alert('Por favor, completa todos los campos (Nombre, Celular, Casa, Perfume, Género y Tamaño) antes de enviar el pedido por WhatsApp.');
+                        alert('Por favor, completa todos los campos (Nombre, Celular, Perfume, Género y Tamaño) antes de enviar el pedido por WhatsApp.');
                     }
                 };
             }
@@ -451,41 +622,144 @@ En **Mis Fragancias Jhon Dainer Arias**, te invitamos a explorar nuestra exquisi
                 perfumeSelect.innerHTML = '<option value="">-- Selecciona un perfume --</option>';
                 if (currentCasa && perfumesByCasa[currentCasa]) {
                     const perfumes = perfumesByCasa[currentCasa];
-                    const selectedPerfumes = perfumes.filter(perfume => {
-                        const perfumeLower = perfume.toLowerCase();
-                        if (currentGenero === 'femenino') {
+                    const filteredPerfumes = perfumes.filter(perfume => {
+                        const perfumeLower = normalizeText(perfume);
+                        const generoLower = normalizeText(currentGenero);
+
+                        if (generoLower === 'femenino') {
                             return perfumeLower.includes('(femenino)') || perfumeLower.includes('(unisex)');
-                        } else if (currentGenero === 'masculino') {
+                        } else if (generoLower === 'masculino') {
                             return perfumeLower.includes('(masculino)') || perfumeLower.includes('(unisex)');
-                        } else if (currentGenero === 'unisex') {
+                        } else if (generoLower === 'unisex') {
                             return perfumeLower.includes('(unisex)');
                         }
                         return true; // Si no hay género seleccionado, muestra todos
                     });
 
-                    selectedPerfumes.forEach(perfume => {
+                    filteredPerfumes.sort((a, b) => a.localeCompare(b)); // Ordenar alfabéticamente
+
+                    filteredPerfumes.forEach(perfume => {
                         const option = document.createElement('option');
                         option.value = perfume;
                         option.textContent = perfume;
                         perfumeSelect.appendChild(option);
                     });
 
-                    // Si ya había un perfume seleccionado, intenta seleccionarlo de nuevo
-                    if (currentPerfume && selectedPerfumes.includes(currentPerfume)) {
-                        perfumeSelect.value = currentPerfume;
+                    // Si ya había un perfume seleccionado por DROPDOWN, intenta seleccionarlo de nuevo
+                    if (currentPerfume && filteredPerfumes.includes(currentPerfume)) {
+                         // Solo si el perfume no fue seleccionado previamente por la búsqueda directa
+                        if (!perfumeSearchInput.value || normalizeText(perfumeSearchInput.value) !== normalizeText(currentPerfume)) {
+                           perfumeSelect.value = currentPerfume;
+                        }
                     } else {
-                        currentPerfume = ''; // Reset if not found in new list
-                        localStorage.removeItem('perfumeSeleccionado');
+                        // Si el perfume anterior no está en la lista filtrada, deseleccionar
+                        perfumeSelect.value = '';
+                        // Pero no borramos currentPerfume si vino de la búsqueda
+                        if (!perfumeSearchInput.value) { // Solo si no se está usando la búsqueda activa
+                            currentPerfume = '';
+                            localStorage.removeItem('perfumeSeleccionado');
+                        }
                     }
 
                     perfumeSelectContainer.style.display = 'block';
                 } else {
                     perfumeSelectContainer.style.display = 'none';
-                    currentPerfume = '';
-                    localStorage.removeItem('perfumeSeleccionado');
+                    // No limpiar currentPerfume aquí para permitir que la búsqueda se mantenga
                 }
                 updateMessageAndWhatsappLink();
             }
+
+            // --- Funcionalidad del Buscador de Perfumes ---
+            function searchPerfumes() {
+                perfumeSearchResults.innerHTML = ''; // Limpiar resultados anteriores
+                const searchTerm = normalizeText(perfumeSearchInput.value.trim());
+
+                if (searchTerm.length < 2) {
+                    perfumeSearchResults.style.display = 'none';
+                    return;
+                }
+
+                perfumeSearchResults.style.display = 'block';
+
+                const allAvailablePerfumes = [];
+                for (const casaKey in perfumesByCasa) {
+                    perfumesByCasa[casaKey].forEach(perfumeName => {
+                        const perfumeLower = normalizeText(perfumeName);
+                        const casaLower = normalizeText(casaSelect.options[casaSelect.querySelector(`option[value="${casaKey}"]`).index].textContent);
+
+                        // Filtra por género si está seleccionado
+                        const generoLower = normalizeText(currentGenero);
+                        let isGenderMatch = true;
+                        if (generoLower) {
+                            if (generoLower === 'femenino' && !(perfumeLower.includes('(femenino)') || perfumeLower.includes('(unisex)'))) {
+                                isGenderMatch = false;
+                            } else if (generoLower === 'masculino' && !(perfumeLower.includes('(masculino)') || perfumeLower.includes('(unisex)'))) {
+                                isGenderMatch = false;
+                            } else if (generoLower === 'unisex' && !perfumeLower.includes('(unisex)')) {
+                                isGenderMatch = false;
+                            }
+                        }
+
+                        if (isGenderMatch && (perfumeLower.includes(searchTerm) || casaLower.includes(searchTerm))) {
+                            allAvailablePerfumes.push({ name: perfumeName, casa: casaKey });
+                        }
+                    });
+                }
+
+                if (allAvailablePerfumes.length === 0) {
+                    perfumeSearchResults.innerHTML = '<div style="padding: 8px;">No se encontraron perfumes.</div>';
+                    return;
+                }
+
+                allAvailablePerfumes.sort((a, b) => a.name.localeCompare(b.name)); // Ordenar alfabéticamente
+
+                allAvailablePerfumes.forEach(item => {
+                    const div = document.createElement('div');
+                    div.classList.add('search-result-item-perfume');
+                    const casaNameFormatted = casaSelect.querySelector(`option[value="${item.casa}"]`).textContent;
+                    div.textContent = `${item.name} (de ${casaNameFormatted})`;
+                    div.dataset.perfume = item.name; // Almacenar el nombre del perfume
+                    div.dataset.casa = item.casa;   // Almacenar la clave de la casa
+
+                    // Marcar como seleccionado si coincide con currentPerfume
+                    if (normalizeText(item.name) === normalizeText(currentPerfume) && normalizeText(item.casa) === normalizeText(currentCasa)) {
+                         div.classList.add('selected');
+                    }
+
+
+                    div.addEventListener('click', function() {
+                        const selectedPerfumeName = this.dataset.perfume;
+                        const selectedPerfumeCasa = this.dataset.casa;
+
+                        // Asignar el perfume seleccionado por la búsqueda
+                        currentPerfume = selectedPerfumeName;
+                        localStorage.setItem('perfumeSeleccionado', currentPerfume);
+
+                        // Asignar la casa correspondiente del perfume seleccionado por la búsqueda
+                        currentCasa = selectedPerfumeCasa;
+                        localStorage.setItem('casaSeleccionada', currentCasa);
+                        casaSelect.value = currentCasa; // Actualizar el dropdown de casa
+
+                        // Limpiar y ocultar resultados de búsqueda
+                        perfumeSearchInput.value = selectedPerfumeName; // Mostrar el perfume seleccionado en el input de búsqueda
+                        perfumeSearchResults.innerHTML = '';
+                        perfumeSearchResults.style.display = 'none';
+
+                        // Actualizar el dropdown de perfumes para que refleje la selección si la casa coincide
+                        // y si el perfume seleccionado es el mismo que el del dropdown
+                        populatePerfumeSelect(); // Repopular el dropdown de perfumes en base a la casa ahora seleccionada
+
+                        // Asegurarse de que el dropdown de perfume refleje el perfume seleccionado por búsqueda
+                        if (perfumeSelect.value !== currentPerfume) {
+                            perfumeSelect.value = currentPerfume;
+                        }
+
+                        updateMessageAndWhatsappLink();
+                    });
+                    perfumeSearchResults.appendChild(div);
+                });
+            }
+
 
             // --- Event Listeners ---
             nombreInput.addEventListener('input', function() {
@@ -503,14 +777,21 @@ En **Mis Fragancias Jhon Dainer Arias**, te invitamos a explorar nuestra exquisi
             casaSelect.addEventListener('change', function() {
                 currentCasa = this.value;
                 localStorage.setItem('casaSeleccionada', currentCasa);
-                currentPerfume = ''; // Reset perfume when casa changes
+                currentPerfume = ''; // Resetear perfume al cambiar de casa
                 localStorage.removeItem('perfumeSeleccionado');
+                perfumeSearchInput.value = ''; // Limpiar input de búsqueda al cambiar de casa
+                perfumeSearchResults.innerHTML = ''; // Limpiar resultados de búsqueda
                 populatePerfumeSelect();
+                updateMessageAndWhatsappLink();
             });
 
             perfumeSelect.addEventListener('change', function() {
                 currentPerfume = this.value;
                 localStorage.setItem('perfumeSeleccionado', currentPerfume);
+                // Si el perfume se seleccionó desde el dropdown, limpiar la búsqueda para evitar conflictos
+                perfumeSearchInput.value = '';
+                perfumeSearchResults.innerHTML = '';
+                perfumeSearchResults.style.display = 'none';
                 updateMessageAndWhatsappLink();
             });
 
@@ -520,7 +801,10 @@ En **Mis Fragancias Jhon Dainer Arias**, te invitamos a explorar nuestra exquisi
                     this.classList.add('selected');
                     currentGenero = this.dataset.genero;
                     localStorage.setItem('generoSeleccionado', currentGenero);
-                    populatePerfumeSelect(); // Repopulate perfumes when gender changes
+                    // Repopular los selectores de perfume y los resultados de búsqueda cuando cambia el género
+                    populatePerfumeSelect();
+                    searchPerfumes(); // Refrescar resultados de búsqueda
+                    updateMessageAndWhatsappLink();
                 });
             });
 
@@ -536,10 +820,86 @@ En **Mis Fragancias Jhon Dainer Arias**, te invitamos a explorar nuestra exquisi
                 });
             });
 
-            // Inicializar al cargar la página
-            populatePerfumeSelect(); // Load perfumes based on initial casa and gender
-            updateMessageAndWhatsappLink(); // Initial message update
+            // Evento para el nuevo input de búsqueda de perfume
+            perfumeSearchInput.addEventListener('input', searchPerfumes);
+
+            // Cerrar resultados de búsqueda si se hace clic fuera
+            document.addEventListener('click', function(event) {
+                if (!perfumeSearchResults.contains(event.target) && event.target !== perfumeSearchInput) {
+                    perfumeSearchResults.innerHTML = '';
+                    perfumeSearchResults.style.display = 'none';
+                }
+            });
+
+
+            // Inicializar la población de perfumes y el mensaje al cargar la página
+            populatePerfumeSelect(); // Esto también llama a updateMessageAndWhatsappLink()
+            // Si hay un perfume en localStorage pero no una casa, intentar encontrar la casa para cargarlo correctamente
+            if (currentPerfume && !currentCasa) {
+                for (const casaKey in perfumesByCasa) {
+                    if (perfumesByCasa[casaKey].includes(currentPerfume)) {
+                        currentCasa = casaKey;
+                        casaSelect.value = currentCasa;
+                        localStorage.setItem('casaSeleccionada', currentCasa);
+                        populatePerfumeSelect(); // Necesario para que el dropdown de perfume se cargue correctamente
+                        break;
+                    }
+                }
+            } else if (currentCasa) {
+                 populatePerfumeSelect(); // Cargar perfumes si ya hay una casa seleccionada
+            }
+
+            // Asegurarse de que el input de búsqueda muestra el perfume si ya estaba seleccionado
+            if (currentPerfume) {
+                perfumeSearchInput.value = currentPerfume;
+            }
+
+            updateMessageAndWhatsappLink(); // Actualiza el mensaje final al cargar
+// --- Alerta inicial con instrucciones de uso ---
+            setTimeout(() => {
+                alert(
+                    "¡Hola!\n\n" +
+                    "Puedes buscar tu perfume por nombre en la opción 'Buscar Perfume por nombre'. Si no sabes el nombre exacto, ¡no te preocupes!, intenta buscar por la 'Casa Perfumera'.\n\n" +
+                    "También puedes explorar nuestras referencias en la opción 'Selecciona el Perfume'.\n\n" +
+                    "Para una búsqueda más fácil, usa los botones 'Para Dama', 'Para Caballero' o 'Unisex' en la sección '¿Para quién es?'. Esto te ayudará a filtrar y encontrar más rápido lo que buscas............   mis fragancias jhon dainer arias te da la bienvenida"
+                );
+            }, 500); // Un pequeño retraso para asegurar que la página se cargue un poco antes del alert
+// --- Función para mostrar el modal personalizado ---
+            function showCustomAlert(message) {
+                const customAlert = document.getElementById('customAlert');
+                const customAlertMessage = document.getElementById('customAlertMessage');
+                const customAlertCloseButton = document.getElementById('customAlertCloseButton');
+
+                customAlertMessage.textContent = message;
+                customAlert.classList.add('show'); // Muestra el overlay
+
+                // Quita el evento click anterior para evitar duplicados
+                customAlertCloseButton.onclick = null;
+                customAlert.onclick = null;
+
+                // Cierra la alerta al hacer clic en el botón o en el overlay (fuera del contenido)
+                customAlertCloseButton.onclick = () => customAlert.classList.remove('show');
+                customAlert.onclick = (event) => {
+                    if (event.target === customAlert) { // Solo si se hace clic en el overlay, no en el contenido
+                        customAlert.classList.remove('show');
+                    }
+                };
+            }
+
+            // --- Llamada a la alerta personalizada al cargar la página ---
+            setTimeout(() => {
+                showCustomAlert(
+                    "¡Hola!\n\n" +
+                    "Puedes buscar tu perfume por nombre en la opción 'Buscar Perfume por nombre'. Si no sabes el nombre exacto, ¡no te preocupes!, intenta buscar por la 'Casa Perfumera'.\n\n" +
+                    "También puedes explorar nuestras referencias en la opción 'Selecciona el Perfume'.\n\n" +
+                    "Para una búsqueda más fácil, usa los botones 'Para Dama', 'Para Caballero' o 'Unisex' en la sección '¿Para quién es?'. Esto te ayudará a filtrar y encontrar más rápido lo que buscas."
+                );
+            }, 500); // Un pequeño retraso
+
+    
+    
         });
     </script>
+
 </body>
 </html>
